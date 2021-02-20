@@ -32,26 +32,3 @@ Resources:
           Properties:
             Path: /test-with-api-call
             Method: get
-
-#   #################### S3 bucket Section ##################
-
-  MyBucket:
-    Type: 'AWS::S3::Bucket'
-  
-  ProductBucketPolicy:
-    Type: AWS::S3::BucketPolicy
-    Properties:
-      Bucket: !Ref MyBucket
-      PolicyDocument:
-        Id: PublicReadPolicy
-        Version: 2012-10-17
-        Statement:
-          - Sid: PublicReadForGetBucketObjects
-            Effect: Allow
-            Principal: '*'
-            Action: 's3:GetObject'
-            Resource: !Join
-              - ''
-              - - 'arn:aws:s3:::'
-                - !Ref MyBucket
-                - /*
