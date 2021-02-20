@@ -1,0 +1,57 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Description: An example RESTful service
+Resources:
+
+#  ###############Lambda Function Section #########
+  Hello:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .src/functions/hello-world
+      Runtime:  nodejs12.x
+      FunctionName: SourabhFunction1
+      Handler: index.handler
+      Events:
+        EndPoint:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: get
+
+  TestWithApiCall:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .src/functions/test-with-api-call
+      Runtime:  nodejs12.x
+      FunctionName: SourabhFunction1
+      Handler: index.handler
+      Events:
+        EndPoint:
+          Type: Api
+          Properties:
+            Path: /test-with-api-call
+            Method: get
+
+#   #################### S3 bucket Section ##################
+
+  MyBucket:
+    Type: 'AWS::S3::Bucket'
+  
+  ProductBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref MyBucket
+      PolicyDocument:
+        Id: PublicReadPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource: !Join
+              - ''
+              - - 'arn:aws:s3:::'
+                - !Ref MyBucket
+                - /*
