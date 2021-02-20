@@ -1,34 +1,48 @@
-AWSTemplateFormatVersion : '2010-09-09'
-Transform: AWS::Serverless-2016-10-31
+# AWSTemplateFormatVersion : '2010-09-09'
+# Transform: AWS::Serverless-2016-10-31
 
-Description: An example RESTful service
-Resources:
+# Description: An example RESTful service
+# Resources:
 
-#  ###############Lambda Function Section #########
-  Hello:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: .src/functions/hello-world
-      Runtime:  nodejs12.x
-      FunctionName: SourabhFunction1
-      Handler: index.handler
-      Events:
-        EndPoint:
-          Type: Api
-          Properties:
-            Path: /hello
-            Method: get
+# #  ###############Lambda Function Section #########
+#   Hello:
+#     Type: AWS::Serverless::Function
+#     Properties:
+#       CodeUri: .src/functions/hello-world
+#       Runtime:  nodejs12.x
+#       FunctionName: SourabhFunction1
+#       Handler: index.handler
+#       Events:
+#         EndPoint:
+#           Type: Api
+#           Properties:
+#             Path: /hello
+#             Method: get
 
-  TestWithApiCall:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: .src/functions/test-with-api-call
-      Runtime:  nodejs12.x
-      FunctionName: SourabhFunction1
-      Handler: index.handler
-      Events:
-        EndPoint:
-          Type: Api
-          Properties:
-            Path: /test-with-api-call
-            Method: get
+#   TestWithApiCall:
+#     Type: AWS::Serverless::Function
+#     Properties:
+#       CodeUri: .src/functions/test-with-api-call
+#       Runtime:  nodejs12.x
+#       FunctionName: SourabhFunction1
+#       Handler: index.handler
+#       Events:
+#         EndPoint:
+#           Type: Api
+#           Properties:
+#             Path: /test-with-api-call
+#             Method: get
+
+service: basic-lambda-deployement 
+
+
+provider:
+  name: aws 
+  runtime: nodejs12.x
+  stage: dev
+  region: ap-south-1
+
+
+functions:
+  hello: 
+    handler: src/function/hello-world/index.handler 
